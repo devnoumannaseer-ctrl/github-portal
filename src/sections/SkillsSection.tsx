@@ -1,113 +1,180 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { SectionHeading } from '../components/SectionHeading';
-import { TechIcon } from '../components/TechIcon';
-import { portfolioData, type SkillItem } from '../data/portfolioData';
+import { motion } from 'framer-motion';
+import {
+  Code2,
+  Terminal,
+  Cpu,
+  Database,
+  Layers,
+  Globe,
+  Binary,
+  Wrench,
+  CheckCircle2,
+  Search,
+  Sparkles,
+} from 'lucide-react';
+import {
+  SiCplusplus,
+  SiPython,
+  SiC,
+  SiJavascript,
+  SiReact,
+  SiTailwindcss,
+  SiHtml5,
+  SiMysql,
+  SiGithub,
+} from 'react-icons/si';
+import { FaJava } from 'react-icons/fa';
+import { portfolioData } from '../data/portfolioData';
+import type { SkillItem } from '../data/portfolioData';
 
-type SkillCategory = 'all' | 'languages' | 'core_cs' | 'web' | 'tools';
+// Map icon strings to components
+const renderIcon = (iconName: string) => {
+  switch (iconName) {
+    case 'SiCplusplus':
+      return <SiCplusplus className="h-5 w-5 text-[#00599C]" />;
+    case 'SiPython':
+      return <SiPython className="h-5 w-5 text-[#3776AB]" />;
+    case 'FaJava':
+      return <FaJava className="h-5 w-5 text-[#ED8B00]" />;
+    case 'SiC':
+      return <SiC className="h-5 w-5 text-[#A8B9CC]" />;
+    case 'SiJavascript':
+      return <SiJavascript className="h-5 w-5 text-[#F7DF1E]" />;
+    case 'SiMysql':
+      return <SiMysql className="h-5 w-5 text-[#00758F]" />;
+    case 'Binary':
+      return <Binary className="h-5 w-5 text-[#ff7a1a]" />;
+    case 'Cpu':
+      return <Cpu className="h-5 w-5 text-[#53d0ff]" />;
+    case 'Layers':
+      return <Layers className="h-5 w-5 text-[#10b981]" />;
+    case 'Database':
+      return <Database className="h-5 w-5 text-[#ffdd00]" />;
+    case 'Terminal':
+      return <Terminal className="h-5 w-5 text-[#d946ef]" />;
+    case 'SiReact':
+      return <SiReact className="h-5 w-5 text-[#61DAFB]" />;
+    case 'SiTailwindcss':
+      return <SiTailwindcss className="h-5 w-5 text-[#38B2AC]" />;
+    case 'SiHtml5':
+      return <SiHtml5 className="h-5 w-5 text-[#E34F26]" />;
+    case 'Globe':
+      return <Globe className="h-5 w-5 text-[#53d0ff]" />;
+    case 'SiGithub':
+      return <SiGithub className="h-5 w-5 text-white" />;
+    case 'Code2':
+      return <Code2 className="h-5 w-5 text-[#007ACC]" />;
+    case 'TerminalSquare':
+      return <Terminal className="h-5 w-5 text-[#FCC624]" />;
+    case 'Wrench':
+      return <Wrench className="h-5 w-5 text-[#ff7a1a]" />;
+    default:
+      return <Code2 className="h-5 w-5 text-white" />;
+  }
+};
 
 export const SkillsSection: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<SkillCategory>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const categories: { label: string; value: SkillCategory }[] = [
-    { label: 'All Disciplines', value: 'all' },
-    { label: 'Languages', value: 'languages' },
-    { label: 'Core Computer Science', value: 'core_cs' },
-    { label: 'Web Tech', value: 'web' },
-    { label: 'Tools & Environments', value: 'tools' },
+  const categories = [
+    { id: 'all', label: 'All Capabilities' },
+    { id: 'languages', label: 'Languages' },
+    { id: 'core_cs', label: 'Core CS' },
+    { id: 'web', label: 'Web Tech' },
+    { id: 'tools', label: 'Tools & Environments' },
   ];
 
   const filteredSkills = portfolioData.skills.filter((skill) => {
-    if (activeCategory === 'all') return true;
-    return skill.category === activeCategory;
+    const matchesCat = selectedCategory === 'all' || skill.category === selectedCategory;
+    const matchesSearch =
+      skill.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      skill.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCat && matchesSearch;
   });
 
   return (
-    <section id="skills" className="py-20 sm:py-28 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading
-          badge="02. TECHNICAL ARSENAL"
-          title="Skills &"
-          highlight="Technologies"
-          subtitle="A categorized overview of the languages, theoretical foundations, and development tools I actively work with."
-        />
-
-        {/* Category Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-          {categories.map((cat) => {
-            const isActive = activeCategory === cat.value;
-            return (
-              <button
-                key={cat.value}
-                onClick={() => setActiveCategory(cat.value)}
-                className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 focus:outline-none ${
-                  isActive
-                    ? 'text-white bg-[#FF4D12] shadow-glow-orange-sm'
-                    : 'text-[#B8B8B8] hover:text-white bg-[#111111] hover:bg-[#181818] border border-[#292929]'
-                }`}
-              >
-                {cat.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Skills Grid */}
-        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <AnimatePresence>
-            {filteredSkills.map((skill: SkillItem, index: number) => (
-              <motion.div
-                key={skill.name}
-                layout
-                initial={{ opacity: 0, scale: 0.9, y: 15 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.35, delay: index * 0.03 }}
-                className="group relative p-5 rounded-2xl bg-[#111111] border border-[#292929] hover:border-[#FF4D12]/50 hover:bg-[#161616] hover:shadow-card-dark transition-all duration-300"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="p-2.5 rounded-xl bg-white/5 group-hover:bg-[#FF4D12]/15 text-zinc-300 group-hover:text-[#FF6B35] border border-[#292929] group-hover:border-[#FF4D12]/30 transition-all duration-300">
-                    <TechIcon name={skill.iconName} className="w-6 h-6" />
-                  </div>
-                  {skill.level && (
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 text-[#B8B8B8] group-hover:text-zinc-200 border border-white/5">
-                      {skill.level}
-                    </span>
-                  )}
-                </div>
-
-                <h3 className="text-base font-bold text-white group-hover:text-white mb-1 transition-colors">
-                  {skill.name}
-                </h3>
-
-                {skill.description && (
-                  <p className="text-xs text-[#B8B8B8] leading-relaxed font-sans">
-                    {skill.description}
-                  </p>
-                )}
-
-                {/* Subtle corner highlight */}
-                <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-[#FF4D12] opacity-0 group-hover:opacity-100 transition-opacity" />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Marquee Ticker banner */}
-        <div className="mt-16 p-4 rounded-2xl bg-[#0e0e0e] border border-[#292929] overflow-hidden relative group">
-          <div className="animate-marquee gap-8 items-center whitespace-nowrap">
-            {[...portfolioData.skills, ...portfolioData.skills].map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-center gap-2.5 text-xs font-mono text-[#B8B8B8] hover:text-zinc-200 transition-colors shrink-0"
-              >
-                <TechIcon name={item.iconName} className="w-4 h-4 text-[#FF4D12]" />
-                <span className="font-semibold text-zinc-300">{item.name}</span>
-                <span className="text-zinc-600">•</span>
-              </div>
-            ))}
+    <section id="skills" className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      {/* Header */}
+      <div className="flex flex-col items-start justify-between gap-4 border-b border-white/10 pb-8 sm:flex-row sm:items-end">
+        <div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#ff7a1a]/30 bg-[#ff7a1a]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-[#ffb37f]">
+            <Sparkles className="w-3.5 h-3.5 text-[#ff7a1a]" />
+            <span>Technical Capabilities</span>
           </div>
+          <h2 className="mt-3 font-antonio text-3xl font-bold uppercase tracking-tight text-white sm:text-4xl lg:text-5xl">
+            Skills &amp; Computational Foundations
+          </h2>
+          <p className="mt-2 max-w-2xl font-poppins text-sm leading-6 text-white/60 sm:text-base">
+            Grounded in low-level systems programming, robust data structures, and algorithmic efficiency, complemented by
+            modern web development frameworks.
+          </p>
         </div>
+
+        {/* Search */}
+        <div className="relative w-full sm:w-72">
+          <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search skills or concepts..."
+            className="w-full rounded-full border border-white/15 bg-white/5 py-2 pl-10 pr-4 text-xs text-white placeholder:text-white/30 focus:border-[#ff7a1a] focus:outline-none"
+          />
+        </div>
+      </div>
+
+      {/* Category Tabs */}
+      <div className="mt-8 flex flex-wrap items-center gap-2">
+        {categories.map((cat) => (
+          <button
+            key={cat.id}
+            type="button"
+            onClick={() => setSelectedCategory(cat.id)}
+            className={`rounded-full px-4 py-2 text-xs font-semibold transition-all ${
+              selectedCategory === cat.id
+                ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]'
+                : 'border border-white/10 bg-white/5 text-white/60 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Skills Grid */}
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {filteredSkills.map((skill) => (
+          <div
+            key={skill.name}
+            className="group flex flex-col justify-between rounded-[24px] border border-white/10 bg-[#101216] p-5 transition-all duration-300 hover:border-white/25 hover:shadow-[0_15px_50px_rgba(0,0,0,0.4)]"
+          >
+            <div>
+              <div className="flex items-center justify-between">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 p-2 transition-transform duration-300 group-hover:scale-110">
+                  {renderIcon(skill.iconName)}
+                </div>
+                <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 text-[10px] font-mono text-[#ffb37f]">
+                  {skill.level}
+                </span>
+              </div>
+
+              <h3 className="mt-4 font-antonio text-xl font-bold tracking-wide text-white group-hover:text-[#ff7a1a] transition-colors">
+                {skill.name}
+              </h3>
+
+              <p className="mt-2 font-poppins text-xs leading-5 text-white/65">
+                {skill.description}
+              </p>
+            </div>
+
+            <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3 text-[10px] uppercase tracking-wider text-white/35 font-mono">
+              <span>{skill.category.replace('_', ' ')}</span>
+              <span className="text-green-400">● Active</span>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );

@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Play } from 'lucide-react';
-import { FaWhatsapp } from 'react-icons/fa';
+import { Menu, X, Sparkles, Terminal, Code2, ArrowUpRight, Github } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
 interface NavbarProps {
-  onReplayIntro?: () => void;
+  onOpenAnalyzer?: () => void;
+  onOpenReadmeBuilder?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenAnalyzer, onOpenReadmeBuilder }) => {
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState('hero');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
 
-      const sections = ['home', 'about', 'skills', 'projects', 'services', 'experience', 'certificates', 'contact'];
-      const scrollPos = window.scrollY + 180;
+      const sectionIds = ['hero', 'how-it-works', 'solutions', 'analyzer', 'readme-builder', 'skills', 'timeline', 'faq', 'contact'];
+      const scrollPos = window.scrollY + 200;
 
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
         if (el) {
           const top = el.offsetTop;
           const height = el.offsetHeight;
           if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(sectionId);
+            setActiveSection(id);
             break;
           }
         }
@@ -46,189 +46,176 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro }) => {
     }
   };
 
+  const navLinks = [
+    { name: 'Home', href: '#hero' },
+    { name: 'How It Works', href: '#how-it-works' },
+    { name: 'Solutions', href: '#solutions' },
+    { name: 'Analyzer', href: '#analyzer' },
+    { name: 'README Builder', href: '#readme-builder' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'FAQ', href: '#faq' },
+    { name: 'Contact', href: '#contact' },
+  ];
+
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          scrolled
-            ? 'bg-black/90 backdrop-blur-md border-b border-zinc-800 py-3.5 shadow-xl'
-            : 'bg-transparent py-5 sm:py-6 border-b border-transparent'
-        }`}
-      >
-        <div className="w-full px-6 sm:px-10 lg:px-14 xl:px-16 flex items-center justify-between">
-          
-          {/* Logo / Monogram (Left side matching the screenshot) */}
+      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav
+          aria-label="Primary"
+          className={`mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 pt-3 sm:gap-4 sm:pt-4 transition-all duration-300 ${
+            scrolled ? 'py-2' : 'py-3'
+          }`}
+        >
+          {/* GitHance-styled Brand / Logo */}
           <a
-            href="#home"
+            href="#hero"
             onClick={(e) => {
               e.preventDefault();
-              scrollTo('#home');
+              scrollTo('#hero');
             }}
-            className="flex items-center gap-2 group focus:outline-none"
-            aria-label="NAUMAN NASEER Home"
+            className="flex min-w-0 items-center gap-3 group focus:outline-none"
           >
-            {/* Geometric N Monogram */}
-            <div className="flex items-center justify-center">
-              <svg
-                viewBox="0 0 100 100"
-                className={`w-9 h-9 sm:w-10 sm:h-10 transition-colors duration-300 ${
-                  scrolled ? 'text-white' : 'text-black'
-                }`}
-                fill="currentColor"
-              >
-                <path d="M12 85V15h18l32 46V15h16v70H60L28 39v46H12z" />
-                <path d="M78 15h10v70H78z" opacity="0.4" />
-              </svg>
+            <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-1.5 shadow-[0_0_20px_rgba(255,122,26,0.2)] transition-all duration-300 group-hover:border-[#ff7a1a]/50 group-hover:shadow-[0_0_25px_rgba(255,122,26,0.4)]">
+              <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-[#ff7a1a]/20 via-transparent to-[#53d0ff]/20">
+                <Terminal className="w-5 h-5 text-[#ff7a1a] transition-transform duration-300 group-hover:scale-110" />
+              </div>
             </div>
-            <span
-              className={`font-black tracking-tighter text-lg sm:text-xl uppercase transition-colors duration-300 hidden sm:inline ${
-                scrolled ? 'text-white' : 'text-black'
-              }`}
-            >
-              NN
-            </span>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1.5">
+                <span className="truncate font-antonio text-xl font-bold tracking-wider text-white sm:text-2xl">
+                  NAUMAN NASEER
+                </span>
+                <span className="hidden sm:inline-block rounded-full border border-[#ff7a1a]/30 bg-[#ff7a1a]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[#ffb37f]">
+                  WORKSPACE
+                </span>
+              </div>
+              <span className="hidden sm:block text-[11px] text-white/50 tracking-wider">
+                GitHance-Engineered Portfolio
+              </span>
+            </div>
           </a>
 
-          {/* Desktop Nav Links & CTA on the MOST RIGHT SIDE (Inside black section) */}
-          <div className="hidden md:flex items-center justify-end gap-5 lg:gap-7 xl:gap-8 ml-auto">
-            <nav className="flex items-center gap-5 lg:gap-7 xl:gap-8">
-              {[
-                { name: 'About', href: '#about' },
-                { name: 'Skills', href: '#skills' },
-                { name: 'Portfolio', href: '#projects' },
-                { name: 'Services', href: '#services' },
-              ].map((item) => {
-                const isActive = activeSection === item.href.replace('#', '');
-                return (
-                  <motion.a
-                    key={item.name}
-                    href={item.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollTo(item.href);
-                    }}
-                    whileHover={{ y: -2 }}
-                    transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-                    className={`relative py-1 text-xs lg:text-sm font-semibold tracking-wide transition-colors duration-200 group ${
-                      isActive ? 'text-white font-bold' : 'text-zinc-300 hover:text-white'
-                    }`}
-                  >
-                    <span>{item.name}</span>
-                    {/* Animated dynamic underline indicator */}
-                    <span
-                      className={`absolute bottom-0 left-0 h-[2px] bg-[#FF4D12] transition-all duration-300 rounded-full ${
-                        isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                      }`}
+          {/* Centered Floating Glass Pill Menu (GitHance signature) */}
+          <div className="relative hidden items-center gap-6 xl:gap-8 rounded-full border border-white/15 bg-black/60 px-6 py-2.5 text-xs lg:text-sm text-white/80 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl lg:flex">
+            {navLinks.map((link) => {
+              const id = link.href.replace('#', '');
+              const isActive = activeSection === id;
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollTo(link.href);
+                  }}
+                  className={`relative py-1 font-medium transition-colors hover:text-white ${
+                    isActive ? 'text-[#ff7a1a] font-semibold' : 'text-white/70'
+                  }`}
+                >
+                  {link.name}
+                  {isActive && (
+                    <motion.span
+                      layoutId="navPillIndicator"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-[#ff7a1a] shadow-[0_0_10px_#ff7a1a]"
+                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                     />
-                  </motion.a>
-                );
-              })}
-            </nav>
-
-            {/* "CONTACT ME" White Pill Button with Interactive Hover Glow & Shimmer */}
-            <motion.a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollTo('#contact');
-              }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: '0 0 24px rgba(255, 255, 255, 0.4), 0 4px 16px rgba(0,0,0,0.3)',
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 450, damping: 22 }}
-              className="relative overflow-hidden group bg-white text-black font-extrabold text-[11px] lg:text-xs tracking-wider uppercase px-5 py-2.5 rounded-full shadow-md transition-all duration-200 flex items-center gap-1.5 shrink-0"
-            >
-              {/* Shimmer sweep effect */}
-              <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-700 pointer-events-none" />
-              <span className="relative z-10">CONTACT ME</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF4D12] group-hover:scale-150 transition-transform duration-200" />
-            </motion.a>
-
-            {/* Optional Replay Welcome Screen */}
-            {onReplayIntro && (
-              <button
-                onClick={onReplayIntro}
-                className="p-2 rounded-full transition-colors text-zinc-400 hover:text-white hover:bg-white/10"
-                title="Replay Opening Welcome Screen"
-                aria-label="Replay Opening Welcome Screen"
-              >
-                <Play className="w-3.5 h-3.5 fill-current" />
-              </button>
-            )}
+                  )}
+                </a>
+              );
+            })}
           </div>
 
-          {/* Mobile Menu Toggle Button */}
-          <div className="md:hidden flex items-center gap-2">
+          {/* Right Action Buttons */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            {/* Analyze Repos Button (Action pill with ember glow) */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`p-2 rounded-xl transition-colors ${
-                scrolled
-                  ? 'bg-zinc-900 text-white border border-zinc-800'
-                  : 'bg-black/10 text-black border border-black/10'
-              }`}
-              aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
+              onClick={() => {
+                if (onOpenAnalyzer) onOpenAnalyzer();
+                scrollTo('#analyzer');
+              }}
+              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[#ff7a1a] px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-black shadow-[0_0_25px_rgba(255,122,26,0.4)] transition-all hover:bg-[#ff8c3a] hover:shadow-[0_0_35px_rgba(255,122,26,0.6)] hover:translate-y-[-1px] active:translate-y-0"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <Code2 className="w-4 h-4 text-black stroke-[2.5]" />
+              <span>Analyze Repos</span>
+            </button>
+
+            {/* GitHub Profile Icon Link */}
+            <a
+              href={portfolioData.socials.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub Profile"
+              className="hidden sm:flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 transition-all hover:border-white/30 hover:bg-white/10 hover:text-white"
+            >
+              <Github className="w-4 h-4" />
+            </a>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-white/90 transition-all hover:bg-white/10 lg:hidden"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5 text-[#ff7a1a]" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
-
-        </div>
+        </nav>
       </header>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Drawer Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.22 }}
-            className="fixed inset-x-4 top-20 z-50 p-6 rounded-2xl bg-zinc-950 border border-zinc-800 shadow-2xl backdrop-blur-xl md:hidden"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-x-4 top-20 z-50 rounded-3xl border border-white/15 bg-[#0b0d0f]/95 p-6 shadow-[0_30px_90px_rgba(0,0,0,0.8)] backdrop-blur-2xl lg:hidden"
           >
-            <div className="flex flex-col gap-2">
-              {[
-                { name: 'About me', href: '#about' },
-                { name: 'Skills', href: '#skills' },
-                { name: 'Portfolio', href: '#projects' },
-                { name: 'Services', href: '#services' },
-                { name: 'Timeline', href: '#experience' },
-                { name: 'Certificates', href: '#certificates' },
-              ].map((item) => (
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                <span className="text-xs uppercase tracking-widest text-[#ffb37f] font-semibold">
+                  Workspace Navigation
+                </span>
+                <span className="flex h-2 w-2 rounded-full bg-[#10b981] animate-ping" />
+              </div>
+              {navLinks.map((link) => (
                 <a
-                  key={item.name}
-                  href={item.href}
+                  key={link.name}
+                  href={link.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    scrollTo(item.href);
+                    scrollTo(link.href);
                   }}
-                  className="px-4 py-3 rounded-xl text-sm font-semibold text-zinc-200 hover:bg-zinc-900 hover:text-white transition-colors"
+                  className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
+                    activeSection === link.href.replace('#', '')
+                      ? 'bg-white/10 text-[#ff7a1a] font-semibold'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                  }`}
                 >
-                  {item.name}
+                  <span>{link.name}</span>
+                  <ArrowUpRight className="w-4 h-4 text-white/40" />
                 </a>
               ))}
-
-              <div className="pt-4 mt-2 border-t border-zinc-800 flex flex-col gap-3">
-                <a
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollTo('#contact');
+              <div className="pt-3 border-t border-white/10 flex flex-col gap-2.5">
+                <button
+                  onClick={() => {
+                    scrollTo('#analyzer');
                   }}
-                  className="w-full py-3 rounded-full text-center text-xs font-black uppercase tracking-wider text-black bg-white hover:bg-zinc-200 transition-all shadow-md"
+                  className="w-full flex items-center justify-center gap-2 rounded-full bg-[#ff7a1a] py-3 text-sm font-semibold text-black shadow-[0_0_25px_rgba(255,122,26,0.4)]"
                 >
-                  CONTACT ME
-                </a>
-
+                  <Code2 className="w-4 h-4" />
+                  <span>Analyze Repositories</span>
+                </button>
                 <a
-                  href="https://web.whatsapp.com/"
+                  href={portfolioData.socials.github}
                   target="_blank"
-                  rel="noreferrer"
-                  className="w-full py-2.5 rounded-full text-center text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 hover:bg-emerald-900/60 transition-all flex items-center justify-center gap-2"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 py-2.5 text-sm font-medium text-white/90"
                 >
-                  <FaWhatsapp className="w-4 h-4" />
-                  <span>Chat on WhatsApp Web</span>
+                  <Github className="w-4 h-4" />
+                  <span>GitHub (@devnoumannaseer-ctrl)</span>
                 </a>
               </div>
             </div>

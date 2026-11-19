@@ -39,8 +39,8 @@ export const CustomCursor: React.FC = () => {
           if (ringRef.current) {
             ringRef.current.style.width = isPointer ? '44px' : '26px';
             ringRef.current.style.height = isPointer ? '44px' : '26px';
-            ringRef.current.style.borderColor = isPointer ? '#FF4D12' : 'rgba(255, 77, 18, 0.45)';
-            ringRef.current.style.backgroundColor = isPointer ? 'rgba(255, 77, 18, 0.12)' : 'transparent';
+            ringRef.current.style.borderColor = isPointer ? '#ff7a1a' : 'rgba(255, 122, 26, 0.45)';
+            ringRef.current.style.backgroundColor = isPointer ? 'rgba(255, 122, 26, 0.12)' : 'transparent';
           }
         }
       }
@@ -78,17 +78,17 @@ export const CustomCursor: React.FC = () => {
 
   return (
     <>
-      {/* Inner sharp red dot - Zero React re-render overhead */}
+      {/* Inner sharp orange dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 pointer-events-none z-50 w-2 h-2 rounded-full bg-[#FF4D12] shadow-[0_0_8px_#FF4D12] opacity-0 will-change-transform"
+        className="fixed top-0 left-0 pointer-events-none z-50 w-2 h-2 rounded-full bg-[#ff7a1a] shadow-[0_0_8px_#ff7a1a] opacity-0 will-change-transform"
         style={{ transform: 'translate3d(-100px, -100px, 0)' }}
       />
 
-      {/* Trailing smooth glow ring - GPU accelerated translate3d */}
+      {/* Trailing smooth glow ring */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 pointer-events-none z-50 rounded-full border border-[#FF4D12]/45 opacity-0 will-change-transform transition-[width,height,background-color,border-color] duration-150 ease-out"
+        className="fixed top-0 left-0 pointer-events-none z-50 rounded-full border border-[#ff7a1a]/45 opacity-0 will-change-transform transition-[width,height,background-color,border-color] duration-150 ease-out"
         style={{ width: '26px', height: '26px', transform: 'translate3d(-100px, -100px, 0)' }}
       />
     </>

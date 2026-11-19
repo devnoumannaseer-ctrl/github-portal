@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" width="960" height="300">
+  <defs>
+    <!-- Background Gradient: Deep Obsidian to Secondary Dark -->
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090909"/>
+      <stop offset="50%" stop-color="#121212"/>
+      <stop offset="100%" stop-color="#0A0A0A"/>
+    </linearGradient>
+
+    <!-- Red Accent Gradient -->
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF263D"/>
+      <stop offset="100%" stop-color="#FF5A6E"/>
+    </linearGradient>
+
+    <!-- Subtle Ambient Glow -->
+    <radialGradient id="redGlow" cx="85%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#FF263D" stop-opacity="0.18"/>
+      <stop offset="50%" stop-color="#B51226" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#090909" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Neon Glow Filter -->
+    <filter id="laserGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- IDE Code Window Background -->
+    <linearGradient id="ideBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#161616"/>
+      <stop offset="100%" stop-color="#0D0D0D"/>
+    </linearGradient>
+  </defs>
+
+  <!-- === CARD BASE === -->
+  <rect width="960" height="300" rx="14" fill="url(#cardBg)"/>
+  <rect width="960" height="300" rx="14" fill="url(#redGlow)"/>
+
+  <!-- Subtle Developer Grid Lines -->
+  <g stroke="#1A1A1A" stroke-width="0.75" opacity="0.6">
+    <line x1="0" y1="50" x2="960" y2="50"/>
+    <line x1="0" y1="100" x2="960" y2="100"/>
+    <line x1="0" y1="150" x2="960" y2="150"/>
+    <line x1="0" y1="200" x2="960" y2="200"/>
+    <line x1="0" y1="250" x2="960" y2="250"/>
+    <line x1="160" y1="0" x2="160" y2="300"/>
+    <line x1="320" y1="0" x2="320" y2="300"/>
+    <line x1="480" y1="0" x2="480" y2="300"/>
+    <line x1="640" y1="0" x2="640" y2="300"/>
+    <line x1="800" y1="0" x2="800" y2="300"/>
+  </g>
+
+  <!-- Card Border -->
+  <rect x="1" y="1" width="958" height="298" rx="13" fill="none" stroke="#222222" stroke-width="1.5"/>
+
+  <!-- Traveling Red Laser Border Animation (GitHub-Safe SMIL) -->
+  <rect x="1" y="1" width="958" height="298" rx="13" fill="none" stroke="#FF263D" stroke-width="2" stroke-dasharray="80,500" opacity="0.9" filter="url(#laserGlow)">
+    <animate attributeName="stroke-dashoffset" from="0" to="-1160" dur="4.5s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- === LEFT AREA: HERO BRAND & PROFILE === -->
+  <!-- Status Indicator Badge -->
+  <g>
+    <rect x="42" y="32" width="280" height="26" rx="13" fill="#141414" stroke="#2A2A2A" stroke-width="1"/>
+    <circle cx="58" cy="45" r="4.5" fill="#10B981">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="58" cy="45" r="2" fill="#6EE7B7"/>
+    <text x="72" y="49" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-size="10" font-weight="700" fill="#E5E7EB" letter-spacing="0.5">OPEN TO INTERNSHIPS &amp; PROJECTS</text>
+  </g>
+
+  <!-- Hero Name: NAUMAN NASEER -->
+  <text x="42" y="105" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-size="46" font-weight="900" fill="#FFFFFF" letter-spacing="1">NAUMAN</text>
+  <text x="260" y="105" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-size="46" font-weight="900" fill="url(#redGrad)" letter-spacing="1">NASEER</text>
+
+  <!-- Primary Subtitle / Title -->
+  <text x="44" y="138" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700" fill="#E5E7EB" letter-spacing="0.4">&lt;/&gt; Computer Science Student · Systems &amp; Software Developer</text>
+
+  <!-- Secondary Description -->
+  <text x="44" y="166" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-size="13" font-weight="500" fill="#A3A3A3" letter-spacing="0.2">C++ &amp; Python Programming · Data Structures &amp; OOP · Modern Full-Stack Web</text>
+
+  <!-- Mini Console Quote Card -->
+  <rect x="42" y="194" width="460" height="66" rx="8" fill="#111111" stroke="#222222" stroke-width="1"/>
+  <rect x="42" y="194" width="4" height="66" rx="2" fill="url(#redGrad)"/>
+  <text x="58" y="218" font-family="'JetBrains Mono',monospace" font-size="11.5" font-style="italic" fill="#F3F4F6">"Learn deeply, code with intent, build to last."</text>
+  <text x="58" y="242" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#737373">Engineering algorithmic logic, robust data architectures, and scalable web solutions.</text>
+
+  <!-- === RIGHT AREA: DEVELOPER CODE WORKSTATION WINDOW === -->
+  <g transform="translate(535, 32)">
+    <!-- Window Body -->
+    <rect width="380" height="232" rx="10" fill="url(#ideBg)" stroke="#262626" stroke-width="1.2"/>
+    <rect width="380" height="232" rx="10" fill="none" stroke="#FF263D" stroke-width="1" opacity="0.3"/>
+
+    <!-- Window Titlebar -->
+    <rect width="380" height="32" rx="10" fill="#1A1A1A"/>
+    <rect y="22" width="380" height="10" fill="#1A1A1A"/>
+    <line x1="0" y1="32" x2="380" y2="32" stroke="#262626" stroke-width="1"/>
+
+    <!-- Mac Traffic Light Dots -->
+    <circle cx="16" cy="16" r="5" fill="#FF5F56"/>
+    <circle cx="32" cy="16" r="5" fill="#FFBD2E"/>
+    <circle cx="48" cy="16" r="5" fill="#27C93F"/>
+
+    <!-- Active Tab -->
+    <rect x="70" y="6" width="130" height="26" rx="4" fill="#0D0D0D"/>
+    <text x="86" y="23" font-family="'JetBrains Mono',monospace" font-size="10.5" font-weight="600" fill="#E5E7EB">nauman.cpp</text>
+    <circle cx="186" cy="19" r="2.5" fill="#FF263D"/>
+
+    <!-- Code Editor Content -->
+    <g font-family="'JetBrains Mono',monospace" font-size="11.5" font-weight="500">
+      <text x="20" y="58" fill="#666666">01</text>
+      <text x="50" y="58" fill="#FF263D">#include</text>
+      <text x="114" y="58" fill="#A3A3A3">&lt;engineer&gt;</text>
+
+      <text x="20" y="80" fill="#666666">02</text>
+
+      <text x="20" y="102" fill="#666666">03</text>
+      <text x="50" y="102" fill="#FF263D">class</text>
+      <text x="92" y="102" fill="#FFFFFF" font-weight="700">Developer</text>
+      <text x="168" y="102" fill="#E5E7EB">{</text>
+
+      <text x="20" y="124" fill="#666666">04</text>
+      <text x="70" y="124" fill="#A3A3A3">string</text>
+      <text x="120" y="124" fill="#FFFFFF">name</text>
+      <text x="156" y="124" fill="#FF263D">=</text>
+      <text x="174" y="124" fill="#10B981">"Nauman Naseer"</text>
+      <text x="290" y="124" fill="#A3A3A3">;</text>
+
+      <text x="20" y="146" fill="#666666">05</text>
+      <text x="70" y="146" fill="#A3A3A3">string</text>
+      <text x="120" y="146" fill="#FFFFFF">role</text>
+      <text x="156" y="146" fill="#FF263D">=</text>
+      <text x="174" y="146" fill="#10B981">"CS Undergrad"</text>
+      <text x="282" y="146" fill="#A3A3A3">;</text>
+
+      <text x="20" y="168" fill="#666666">06</text>
+      <text x="70" y="168" fill="#A3A3A3">auto</text>
+      <text x="105" y="168" fill="#FFFFFF">stack</text>
+      <text x="148" y="168" fill="#FF263D">=</text>
+      <text x="166" y="168" fill="#10B981">{"C++", "Python", "React"}</text>
+      <text x="360" y="168" fill="#A3A3A3">;</text>
+
+      <text x="20" y="190" fill="#666666">07</text>
+      <text x="70" y="190" fill="#A3A3A3">bool</text>
+      <text x="105" y="190" fill="#FFFFFF">openToWork</text>
+      <text x="190" y="190" fill="#FF263D">=</text>
+      <text x="208" y="190" fill="#60A5FA">true</text>
+      <text x="240" y="190" fill="#A3A3A3">;</text>
+
+      <text x="20" y="212" fill="#666666">08</text>
+      <text x="50" y="212" fill="#E5E7EB">};</text>
+
+      <!-- Blinking Cursor -->
+      <line x1="72" y1="202" x2="72" y2="216" stroke="#FF263D" stroke-width="2">
+        <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+      </line>
+    </g>
+  </g>
+</svg>
