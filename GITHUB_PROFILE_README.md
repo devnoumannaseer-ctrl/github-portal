@@ -42,11 +42,11 @@
 </p>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     TECH STACK — SPIDER HUB GRAPH (Tools I Used)
+     TECH STACK — SPIDER HUB GRAPH
      ═══════════════════════════════════════════════════════════════════ -->
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/devnoumannaseer-ctrl/devnoumannaseer-ctrl/main/assets/tech-stack-cards.svg" width="760" alt="Tech Stack — Tools I Used" />
+  <img src="https://raw.githubusercontent.com/devnoumannaseer-ctrl/devnoumannaseer-ctrl/main/assets/tech-stack-cards.svg" width="760" alt="Tech Stack" />
 </div>
 
 <p align="center">
